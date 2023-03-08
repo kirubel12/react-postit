@@ -1,37 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import supabase from '../config/supabaseClient'
-import { redirect } from 'react-router-dom'
+
+
+
 const RegisterUser = () => {
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
-  const [disabled,setDisabled] = useState(true)
   const [error,setError] = useState("")
-  const [isRegistered, setIsRegistered] = useState(false);
 
-  
-    const registeruser = async(e) => {
-      e.preventDefault()
-      const {data, error} = await supabase.auth.signUp({
-        email: email,
-        password:password,
-        
-      })
-      if (error){
-        setError(error.message)
-      }
-      if (data){
-        console.log(data.user)
-        return redirect("/dashbaord")
-      }
-      
-  
-  
-      
-      
-  
+  const registeruser = async() => {
+    const {data,error} = await supabase.auth.signUp({
+      email: email,
+      password: password
+    })
+    if (data){
+      console.log(data)
     }
- 
+    if (error){
+      setError(error.message)
+      console.log(error.message)
+    }
+  }
   return (
     <div>
     <Header />
@@ -40,7 +30,7 @@ const RegisterUser = () => {
           <h2 className='text-center text-2xl font-bold text-gray-800 capitalize'>Register user</h2>
           
             {error && 
-            <div className='bg-red-600 text-white w-full p-3 rounded-md'>
+            <div className='bg-red-600 text-white w-full p-3 rounded-md mt-4'>
               <p>{error}</p>
             </div>}
        
@@ -64,6 +54,7 @@ const RegisterUser = () => {
           </div>
           <div className='mt-3'>
             <button 
+            type='submit'
             className='bg-blue-500 text-white p-2 text-xl rounded-md w-full text-center font-semibold disabled:opacity-40'
             disabled={!email || !password}
             >Register
