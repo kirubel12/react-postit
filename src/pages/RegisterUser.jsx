@@ -22,6 +22,9 @@ const RegisterUser = () => {
       console.log(error.message)
     }
   }
+  useEffect(() => {
+    registeruser();
+  })
   return (
     <div>
     <Header />
