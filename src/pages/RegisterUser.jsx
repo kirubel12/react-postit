@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import supabase from '../config/supabaseClient'
 
 
 
 const RegisterUser = () => {
-  const [email,setEmail] = useState('')
-  const [password,setPassword] = useState('')
-  const [error,setError] = useState("")
+  const navigate = useNavigate();
+const [email,setEmail] = useState('')
+const [password,setPassword] = useState('')
+const [error,setError] = useState("")
 
-  const registeruser = async() => {
+const registeruser = async(e) => {
+    e.preventDefault();
     const {data,error} = await supabase.auth.signUp({
       email: email,
       password: password
     })
-    if (data){
-      console.log(data)
-    }
-    if (error){
-      setError(error.message)
-      console.log(error.message)
+    console.log("submitting")
+    if(data){
+      console.log("Registered")
+      return navigate("/dashbaord")
     }
   }
-  useEffect(() => {
-    registeruser();
-  })
   return (
     <div>
     <Header />
