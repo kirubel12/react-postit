@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import Header from '../components/Header'
 import supabase from '../config/supabaseClient'
 
@@ -10,6 +11,9 @@ const RegisterUser = () => {
 const [email,setEmail] = useState('')
 const [password,setPassword] = useState('')
 const [error,setError] = useState("")
+const toaster = () => {
+  toast.success("Registerd successfully")
+}
 
 const registeruser = async(e) => {
     e.preventDefault();
@@ -19,8 +23,10 @@ const registeruser = async(e) => {
     })
     console.log("submitting")
     if(data){
-      console.log("Registered")
-      return navigate("/dashbaord")
+      setEmail('')
+      setPassword('')
+      toaster()
+      return navigate("/login")
     }
   }
   return (
